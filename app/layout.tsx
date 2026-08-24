@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { cn } from "@/lib/utils";
+import Header from "@/components/header";
 
-const inter = Inter({subsets:["latin"]})
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "NexDocs",
-  description: "Next-generation document platform",
+  title: "NexDocs | AI-Powered Multi-Tenant Document Analysis Platform",
+  description:
+    "Enterprise SaaS platform for secure document management, AI-powered document analysis and team collaboration.",
 };
 
 export default function RootLayout({
@@ -18,11 +22,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html
-      lang="en" suppressHydrationWarning
-    >
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+        <body className={inter.className}>
+          <div className="min-h-screen flex flex-col">
+            {/* header */}
+            <Header/>
+            {/* main */}
+            <main className="flex-1">{children}</main>
+            {/* Footer */}
+          </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
